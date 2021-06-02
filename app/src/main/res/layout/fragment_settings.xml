@@ -16,11 +16,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/ramUsageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/ramUsage"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:id="@+id/ramLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_220sdp"
-                android:layout_alignParentTop="true"
+                android:layout_below="@id/ramUsageText"
                 android:layout_centerHorizontal="true">
 
                 <com.razerdp.widget.animatedpieview.AnimatedPieView
@@ -33,15 +46,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="59%"
+                    android:textAlignment="center"
                     android:textSize="@dimen/_16ssp" />
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/diskUsageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ramLayout"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="@string/diskUsage"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/diskLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_220sdp"
-                android:layout_below="@id/ramLayout"
+                android:layout_below="@id/diskUsageText"
                 android:layout_centerHorizontal="true">
 
                 <com.razerdp.widget.animatedpieview.AnimatedPieView
@@ -54,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="59%"
+                    android:textAlignment="center"
                     android:textSize="@dimen/_16ssp" />
             </RelativeLayout>
 
@@ -88,6 +113,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/cpuTemperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cpu_temp_text"
