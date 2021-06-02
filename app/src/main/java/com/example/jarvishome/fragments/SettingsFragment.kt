@@ -1,5 +1,6 @@
 package com.example.jarvishome.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,6 +56,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         database = FirebaseDatabase.getInstance().getReference("PI")
         darkThemeCard.setOnClickListener(this)
         database.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (x in snapshot.children) {
                     if (x.key == "DISK") {
@@ -75,7 +77,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     }
                     if (x.key == "CPU") {
                         val hash = x.value as HashMap<*, *>
-                        cpuTemperature.text = "${hash["temperature"]}\u2103"
+                        val temp = (hash["temperature"] as String).toDouble().toInt()
+                        cpuTemperature.text = "${temp}\u2103"
                     }
                 }
             }
@@ -87,6 +90,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupDiskPieChart(free: Double, used: Double) {
         val config = AnimatedPieViewConfig()
         config.addData(
@@ -121,6 +125,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         disk_pieChart.start()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupRamPieChart(free: Double, used: Double) {
         val config = AnimatedPieViewConfig()
         config.addData(

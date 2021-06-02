@@ -21,77 +21,15 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : AppCompatActivity() {
-    private lateinit var database: DatabaseReference
+//    private lateinit var database: DatabaseReference
 
     lateinit var bottomNavAdapter: DashboardBottomNavAdapter
-    private var isOn = false
-    private var isOn2 = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        database = FirebaseDatabase.getInstance().getReference("Controls").child("Lights")
+//        database = FirebaseDatabase.getInstance().getReference("Controls").child("Lights")
         changeStatusBarColor(false)
-//        addData()
-//        gateButton.setOnClickListener {
-//            updateValueForGate()
-//        }
-//        exB.setOnClickListener {
-//            testing()
-//        }
-
-//        setupPieChart()
         setViewPager()
-    }
-
-
-    private fun updateValueForGate() {
-        // Channel 8, for pin 21
-
-        val device = if (isOn) {
-            isOn = false
-            DeviceModel("StoreRoom", 19, 0)
-        } else {
-            isOn = true
-            DeviceModel("StoreRoom", 19, 1)
-        }
-        database.child(device.name).setValue(device)
-//        database.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (item in snapshot.children) {
-//                    if ()
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this@DashboardActivity, error.toString(), Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
-    }
-
-    private fun testing() {
-        // Channel 8, for pin 21
-
-        val device = if (isOn2) {
-            isOn2 = false
-            DeviceModel("Bedroom1", 21, 0)
-        } else {
-            isOn2 = true
-            DeviceModel("Bedroom1", 21, 1)
-        }
-        database.child(device.name).setValue(device)
-//        database.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (item in snapshot.children) {
-//                    if ()
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this@DashboardActivity, error.toString(), Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
     }
 
     @SuppressLint("InflateParams")
@@ -191,23 +129,22 @@ class DashboardActivity : AppCompatActivity() {
         })
     }
 
-
 //    private fun addData() {
 //        getDataList().forEach {
 //            database.child(it.name).setValue(it)
 //        }
 //    }
-
-    private fun getDataList(): ArrayList<DeviceModel> {
-        return arrayListOf(
-            DeviceModel("Bedroom1", 21, 0),
-            DeviceModel("Kitchen", 20, 0),
-            DeviceModel("LivingRoom", 16, 0),
-            DeviceModel("Bedroom2", 12, 0),
-            DeviceModel("Bathroom", 26, 0),
-            DeviceModel("StoreRoom", 19, 0),
-            DeviceModel("GuestRoom", 13, 0),
-            DeviceModel("Gate", 6, 0)
-        )
-    }
+//
+//    private fun getDataList(): ArrayList<DeviceModel> {
+//        return arrayListOf(
+//            DeviceModel("Bedroom1", 21, 0),
+//            DeviceModel("Kitchen", 20, 0),
+//            DeviceModel("LivingRoom", 16, 0),
+//            DeviceModel("Bedroom2", 12, 0),
+//            DeviceModel("Bathroom", 26, 0),
+//            DeviceModel("StoreRoom", 19, 0),
+//            DeviceModel("GuestRoom", 13, 0),
+//            DeviceModel("Gate", 6, 0)
+//        )
+//    }
 }
