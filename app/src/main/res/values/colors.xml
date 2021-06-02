@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#1C91EC</color>
-    <color name="secondaryColor">#F1F4F6</color>
+    <color name="colorPrimaryWithOpacity">#333700B3</color>
+    <color name="secondaryColor">#1C91EC</color>
+    <color name="backgroundColor">#F1F4F6</color>
     <color name="primaryVariant">#0B82E6</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -11,4 +13,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pie1">#87E7FF</color>
     <color name="pie2">#8E93F5</color>
+    <color name="textColorDark">#5C6272</color>
 </resources>

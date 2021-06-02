@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.jarvishome.R
+import com.example.jarvishome.adaptors.HomeDevicesAdapter
 
 
 class HomeFragment : Fragment() {
@@ -18,6 +21,7 @@ class HomeFragment : Fragment() {
 
     }
 
+    private lateinit var homeRecyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +33,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViews(screenLayout: View) {
+        homeRecyclerView = screenLayout.findViewById(R.id.homeRecyclerView)
+        setupRecyclerView()
+    }
 
+    private fun setupRecyclerView() {
+        homeRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = HomeDevicesAdapter(requireContext(), arrayListOf())
+        }
     }
 }

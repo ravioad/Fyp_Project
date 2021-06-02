@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_20sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_10sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/home_device_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/humidity"
+            app:tint="@color/colorPrimary"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/home_device_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_toEndOf="@id/home_device_image"
+            android:text="Bedroom"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/home_device_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_device_title"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toEndOf="@id/home_device_image"
+            android:text="Lights"
+            android:textSize="@dimen/_10ssp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/device_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text=" " />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

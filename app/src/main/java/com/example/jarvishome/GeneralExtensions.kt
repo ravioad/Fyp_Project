@@ -123,6 +123,7 @@ fun Activity.changeStatusBarColor(isLight: Boolean = true) {
             R.color.secondaryColor
         ) // set status background white
     } else {
+        ///TExt dark
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         val decorView: View = window.decorView //set status background black
         decorView.systemUiVisibility =

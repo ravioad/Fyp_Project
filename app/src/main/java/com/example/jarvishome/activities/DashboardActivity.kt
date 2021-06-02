@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.jarvishome.R
 import com.example.jarvishome.adaptors.DashboardBottomNavAdapter
+import com.example.jarvishome.changeStatusBarColor
 import com.example.jarvishome.fragments.HomeFragment
 import com.example.jarvishome.fragments.SettingsFragment
 import com.example.jarvishome.models.DeviceModel
@@ -29,6 +30,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         database = FirebaseDatabase.getInstance().getReference("Controls").child("Lights")
+        changeStatusBarColor(false)
 //        addData()
 //        gateButton.setOnClickListener {
 //            updateValueForGate()
