@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.jarvishome.R
 import com.example.jarvishome.models.DeviceModel
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -26,14 +27,14 @@ class HomeDevicesAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeDevicesAdapter.MyViewHolder, position: Int) {
-//        holder.bind(list[position])
+        holder.bind(list[position], position)
 //        holder.itemView.setOnClickListener {
 //
 //        }
     }
 
     override fun getItemCount(): Int {
-        return 12// list.size
+        return list.size
     }
 
 
@@ -54,10 +55,14 @@ class HomeDevicesAdapter(
             }
         }
 
-        fun bind(item: DeviceModel) {
+        fun bind(item: DeviceModel, position: Int) {
             title?.text = item.name
-            type?.text = "Lights"
-
+            type?.text = context.resources.getString(R.string.Lights)
+            if (position % 2 == 0) {
+                Glide.with(context).load(R.drawable.lamp).into(icon!!)
+            } else {
+                Glide.with(context).load(R.drawable.fan).into(icon!!)
+            }
         }
     }
 }

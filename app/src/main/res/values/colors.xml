@@ -3,7 +3,7 @@
     <color name="colorPrimary">#1C91EC</color>
     <color name="colorPrimaryWithOpacity">#333700B3</color>
     <color name="secondaryColor">#1C91EC</color>
-    <color name="backgroundColor">#F1F4F6</color>
+    <color name="backgroundColor">#FFFFFFFF</color>
     <color name="primaryVariant">#0B82E6</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

@@ -120,7 +120,7 @@ fun Activity.changeStatusBarColor(isLight: Boolean = true) {
         }
         window.statusBarColor = ContextCompat.getColor(
             this,
-            R.color.secondaryColor
+            R.color.backgroundColor
         ) // set status background white
     } else {
         ///TExt dark

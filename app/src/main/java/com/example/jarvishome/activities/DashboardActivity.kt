@@ -42,34 +42,7 @@ class DashboardActivity : AppCompatActivity() {
 //        setupPieChart()
         setViewPager()
     }
-//
-//    private fun setupPieChart() {
-//        val config = AnimatedPieViewConfig()
-//        config.addData(
-//            SimplePieInfo(
-//                123.toDouble(),
-//                ContextCompat.getColor(this, R.color.pie1),
-//                "Free space"
-//            )
-//        )
-//        config.addData(
-//            SimplePieInfo(
-//                332.toDouble(),
-//                ContextCompat.getColor(this, R.color.pie2),
-//                "Used space"
-//            )
-//        )
-//        config.strokeWidth(resources.getDimension(R.dimen._10sdp).toInt())
-//        config.duration(2000)
-//        config.drawText(true)
-//        config.textSize = resources.getDimension(R.dimen._10ssp)
-//        config.selectListener(OnPieSelectListener { pieInfo, isFloatUp ->
-//            val percent = (pieInfo.value / (123.toDouble() + 332.toDouble())) * 100
-//            percentage.text = "${percent.toInt()}%"
-//        })
-//        pieChart.applyConfig(config)
-//        pieChart.start()
-//    }
+
 
     private fun updateValueForGate() {
         // Channel 8, for pin 21
@@ -170,12 +143,14 @@ class DashboardActivity : AppCompatActivity() {
                         0 -> {
                             if (i == tab?.position) {
                                 img.select(this@DashboardActivity)
+                                changeStatusBarColor(false)
                             } else {
                                 img.unSelect(this@DashboardActivity)
                             }
                         }
                         1 -> {
                             if (i == tab?.position) {
+                                changeStatusBarColor()
                                 img.select(this@DashboardActivity)
                             } else {
                                 img.unSelect(this@DashboardActivity)
