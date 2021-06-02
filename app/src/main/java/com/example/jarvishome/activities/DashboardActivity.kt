@@ -1,20 +1,28 @@
 package com.example.jarvishome.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.example.jarvishome.R
+import com.example.jarvishome.adaptors.DashboardBottomNavAdapter
+import com.example.jarvishome.fragments.HomeFragment
+import com.example.jarvishome.fragments.SettingsFragment
 import com.example.jarvishome.models.DeviceModel
+import com.example.jarvishome.select
+import com.example.jarvishome.unSelect
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig
-import com.razerdp.widget.animatedpieview.callback.OnPieSelectListener
-import com.razerdp.widget.animatedpieview.data.SimplePieInfo
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
 
+    lateinit var bottomNavAdapter: DashboardBottomNavAdapter
     private var isOn = false
     private var isOn2 = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,43 +30,44 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
         database = FirebaseDatabase.getInstance().getReference("Controls").child("Lights")
 //        addData()
-        gateButton.setOnClickListener {
-            updateValueForGate()
-        }
-        exB.setOnClickListener {
-            testing()
-        }
+//        gateButton.setOnClickListener {
+//            updateValueForGate()
+//        }
+//        exB.setOnClickListener {
+//            testing()
+//        }
 
-        setupPieChart()
+//        setupPieChart()
+        setViewPager()
     }
-
-    private fun setupPieChart() {
-        val config = AnimatedPieViewConfig()
-        config.addData(
-            SimplePieInfo(
-                123.toDouble(),
-                ContextCompat.getColor(this, R.color.pie1),
-                "Free space"
-            )
-        )
-        config.addData(
-            SimplePieInfo(
-                332.toDouble(),
-                ContextCompat.getColor(this, R.color.pie2),
-                "Used space"
-            )
-        )
-        config.strokeWidth(resources.getDimension(R.dimen._10sdp).toInt())
-        config.duration(2000)
-        config.drawText(true)
-        config.textSize = resources.getDimension(R.dimen._10ssp)
-        config.selectListener(OnPieSelectListener { pieInfo, isFloatUp ->
-            val percent = (pieInfo.value / (123.toDouble() + 332.toDouble())) * 100
-            percentage.text = "${percent.toInt()}%"
-        })
-        pieChart.applyConfig(config)
-        pieChart.start()
-    }
+//
+//    private fun setupPieChart() {
+//        val config = AnimatedPieViewConfig()
+//        config.addData(
+//            SimplePieInfo(
+//                123.toDouble(),
+//                ContextCompat.getColor(this, R.color.pie1),
+//                "Free space"
+//            )
+//        )
+//        config.addData(
+//            SimplePieInfo(
+//                332.toDouble(),
+//                ContextCompat.getColor(this, R.color.pie2),
+//                "Used space"
+//            )
+//        )
+//        config.strokeWidth(resources.getDimension(R.dimen._10sdp).toInt())
+//        config.duration(2000)
+//        config.drawText(true)
+//        config.textSize = resources.getDimension(R.dimen._10ssp)
+//        config.selectListener(OnPieSelectListener { pieInfo, isFloatUp ->
+//            val percent = (pieInfo.value / (123.toDouble() + 332.toDouble())) * 100
+//            percentage.text = "${percent.toInt()}%"
+//        })
+//        pieChart.applyConfig(config)
+//        pieChart.start()
+//    }
 
     private fun updateValueForGate() {
         // Channel 8, for pin 21
@@ -109,6 +118,102 @@ class DashboardActivity : AppCompatActivity() {
 //
 //        })
     }
+
+    @SuppressLint("InflateParams")
+    private fun setViewPager() {
+        bottomNavAdapter = DashboardBottomNavAdapter(supportFragmentManager)
+        bottomNavAdapter.addFragment(HomeFragment.newInstance())
+        bottomNavAdapter.addFragment(SettingsFragment.newInstance())
+        main_viewpager.adapter = bottomNavAdapter
+        bottomTabLayout.setupWithViewPager(main_viewpager)
+        main_viewpager.offscreenPageLimit = 0
+        for (i in 0 until bottomNavAdapter.count) {
+            val customView = layoutInflater.inflate(R.layout.custom_tab_layout, null)
+            val image = customView.findViewById<ImageView>(R.id.icon)
+            val params = image.layoutParams
+            params.width = resources.getDimension(R.dimen._22sdp).toInt()
+            params.height = resources.getDimension(R.dimen._22sdp).toInt()
+            image.layoutParams = params
+            when (i) {
+                0 -> {
+                    Glide.with(this).load(R.drawable.home).into(image)
+                    image.select(this)
+                }
+                1 -> {
+                    Glide.with(this).load(R.drawable.settings).into(image)
+                    image.unSelect(this)
+                }
+            }
+            bottomTabLayout.getTabAt(i)?.customView = customView
+        }
+        val tabStrip = bottomTabLayout.getChildAt(0)
+        if (tabStrip is ViewGroup) {
+            for (i in 0 until tabStrip.childCount) {
+                val tabView = tabStrip.getChildAt(i)
+                val margin = resources.getDimension(R.dimen._40sdp).toInt()
+                tabView.setPadding(margin, 0, margin, 0)
+            }
+            bottomTabLayout.requestLayout()
+        }
+        addBottomNavListener()
+    }
+
+    private fun addBottomNavListener() {
+        bottomTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                for (i in 0 until bottomNavAdapter.count) {
+                    val img =
+                        bottomTabLayout.getTabAt(i)?.customView!!.findViewById<ImageView>(R.id.icon)
+                    when (i) {
+                        0 -> {
+                            if (i == tab?.position) {
+                                img.select(this@DashboardActivity)
+                            } else {
+                                img.unSelect(this@DashboardActivity)
+                            }
+                        }
+                        1 -> {
+                            if (i == tab?.position) {
+                                img.select(this@DashboardActivity)
+                            } else {
+                                img.unSelect(this@DashboardActivity)
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
+        bottomTabLayout.getTabAt(0)?.select()
+//        selectedFragment = bottomNavAdapter.getItem(0) as MyBaseFragment
+        main_viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+//                selectedFragment = bottomNavAdapter.getItem(position) as MyBaseFragment
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+        })
+    }
+
 
 //    private fun addData() {
 //        getDataList().forEach {

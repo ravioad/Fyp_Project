@@ -1,46 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/secondaryColor"
     tools:context=".activities.DashboardActivity">
 
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="@dimen/_250sdp"-->
+    <!--        android:layout_height="@dimen/_250sdp"-->
+    <!--        android:layout_above="@id/gateButton"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginBottom="@dimen/_100sdp">-->
+
+    <!--        <com.razerdp.widget.animatedpieview.AnimatedPieView-->
+    <!--            android:id="@+id/pieChart"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/percentage"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:text="59%"-->
+    <!--            android:textSize="@dimen/_20ssp" />-->
+    <!--    </RelativeLayout>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/gateButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_above="@id/exB"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:text="Store Room" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/exB"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="@dimen/_20sdp"-->
+    <!--        android:layout_marginBottom="@dimen/_20sdp"-->
+    <!--        android:text="Bedroom1" />-->
     <RelativeLayout
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_above="@id/gateButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_100sdp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <com.razerdp.widget.animatedpieview.AnimatedPieView
-            android:id="@+id/pieChart"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomTabLayout" />
 
-        <TextView
-            android:id="@+id/percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="59%"
-            android:textSize="@dimen/_22ssp" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/bottomTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="top" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/gateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/exB"
-        android:layout_centerHorizontal="true"
-        android:text="Store Room" />
-
-    <Button
-        android:id="@+id/exB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:text="Bedroom1" />
 </RelativeLayout>
