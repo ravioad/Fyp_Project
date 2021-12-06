@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,8 +33,12 @@ fun View.makeGone() {
     this.visibility = View.GONE
 }
 
-fun String.showToastShort(context: Context) {
-    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
+fun Activity.showToastShort(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.showToastShort(msg: String) {
+    Toast.makeText(this.requireContext(), msg, Toast.LENGTH_SHORT).show()
 }
 
 fun String.showToastLong(context: Context) {

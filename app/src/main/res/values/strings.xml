@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="diskUsage">Disk Usage (Pi)</string>
     <string name="ramUsage">RAM Usage (Pi)</string>
+    <string name="speech_recognition">App new permission to record voice for speech recognition.</string>
+    <string name="signIn">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="dontHaveAccount">Don\'t have an account?</string>
+    <string name="signUp">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="phoneNumber">Phone</string>
 </resources>

@@ -7,44 +7,33 @@
     android:background="@color/backgroundColor"
     tools:context=".activities.DashboardActivity">
 
-
-
-    <!--    <Button-->
-    <!--        android:id="@+id/gateButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_above="@id/exB"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:text="Store Room" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/exB"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="@dimen/_20sdp"-->
-    <!--        android:layout_marginBottom="@dimen/_20sdp"-->
-    <!--        android:text="Bedroom1" />-->
-    <RelativeLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomTabLayout">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/main_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottomTabLayout" />
+    </androidx.viewpager.widget.ViewPager>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/bottomTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/white"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorGravity="top" />
-    </RelativeLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/bottomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorGravity="top" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomTabLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_30sdp"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_speech"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

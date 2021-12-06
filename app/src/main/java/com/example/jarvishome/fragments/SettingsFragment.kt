@@ -1,6 +1,7 @@
 package com.example.jarvishome.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.jarvishome.R
+import com.example.jarvishome.activities.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.razerdp.widget.animatedpieview.AnimatedPieView
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig
@@ -28,6 +31,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     }
 
+    private var mAuth: FirebaseAuth? = null
     private lateinit var database: DatabaseReference
     private lateinit var darkThemeCard: CardView
     private lateinit var ram_pieChart: AnimatedPieView
@@ -43,6 +47,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val screenLayout = inflater.inflate(R.layout.fragment_settings, container, false)
+        mAuth = FirebaseAuth.getInstance()
         initView(screenLayout)
         return screenLayout
     }
@@ -162,30 +167,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.darkThemeCard -> {
-                if (isOn) {
-                    darkThemeCard.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.backgroundColor)
-                    )
-                    dark_theme_text.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                    )
-                    dark_theme_status.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                    )
-                    isOn = false
-                } else {
-                    isOn = true
-                    darkThemeCard.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                    )
-                    dark_theme_text.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.backgroundColor)
-                    )
-                    dark_theme_status.setTextColor(
-                        ContextCompat.getColor(requireContext(), R.color.backgroundColor)
-                    )
-                }
-
+                mAuth?.signOut()
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+                requireActivity().finish()
             }
         }
     }

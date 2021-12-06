@@ -159,27 +159,12 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/dark_theme_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:letterSpacing="0.3"
-                        android:text="Dark\nTheme"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/_12ssp"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/dark_theme_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/dark_theme_text"
-                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:text="ON"
+                        android:text="Logout"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_22ssp"

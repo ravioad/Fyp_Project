@@ -1,36 +1,91 @@
 package com.example.jarvishome.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.speech.tts.TextToSpeech
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.example.jarvishome.R
+import com.example.jarvishome.*
 import com.example.jarvishome.adaptors.DashboardBottomNavAdapter
-import com.example.jarvishome.changeStatusBarColor
+import com.example.jarvishome.databinding.ActivityDashboardBinding
 import com.example.jarvishome.fragments.HomeFragment
 import com.example.jarvishome.fragments.SettingsFragment
-import com.example.jarvishome.models.DeviceModel
-import com.example.jarvishome.select
-import com.example.jarvishome.unSelect
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
+import android.speech.tts.Voice
+import android.util.Log
 
-class DashboardActivity : AppCompatActivity() {
-//    private lateinit var database: DatabaseReference
 
+private const val REQUEST_CODE_PERMISSIONS = 10
+
+class DashboardActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var tts: TextToSpeech? = null
     lateinit var bottomNavAdapter: DashboardBottomNavAdapter
+    private lateinit var binding: ActivityDashboardBinding
+    private var textReceived = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
-//        database = FirebaseDatabase.getInstance().getReference("Controls").child("Lights")
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         changeStatusBarColor(false)
         setViewPager()
+        speakUp("")
+        binding.floatingActionButton.setOnClickListener(this)
     }
+
+    private fun speakUp(text: String) {
+        tts = TextToSpeech(applicationContext) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+//                showToastShort("Not Error: $status")
+                tts?.language = Locale.getDefault()
+                tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+            } else {
+                showToastShort("Error: $status")
+            }
+        }
+    }
+
+    @AfterPermissionGranted(REQUEST_CODE_PERMISSIONS)
+    private fun startRecognizerWithPermission() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.RECORD_AUDIO)) {
+            startRecognizer()
+        } else {
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.speech_recognition),
+                REQUEST_CODE_PERMISSIONS,
+                Manifest.permission.RECORD_AUDIO
+            )
+        }
+    }
+
+    private var recognizerIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                try {
+                    val resultData =
+                        result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val text = resultData?.get(0).toString()
+                    this.textReceived = text
+                    showToastShort(text)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
     @SuppressLint("InflateParams")
     private fun setViewPager() {
@@ -129,22 +184,38 @@ class DashboardActivity : AppCompatActivity() {
         })
     }
 
-//    private fun addData() {
-//        getDataList().forEach {
-//            database.child(it.name).setValue(it)
-//        }
-//    }
-//
-//    private fun getDataList(): ArrayList<DeviceModel> {
-//        return arrayListOf(
-//            DeviceModel("Bedroom1", 21, 0),
-//            DeviceModel("Kitchen", 20, 0),
-//            DeviceModel("LivingRoom", 16, 0),
-//            DeviceModel("Bedroom2", 12, 0),
-//            DeviceModel("Bathroom", 26, 0),
-//            DeviceModel("StoreRoom", 19, 0),
-//            DeviceModel("GuestRoom", 13, 0),
-//            DeviceModel("Gate", 6, 0)
-//        )
-//    }
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.floatingActionButton -> {
+                if (textReceived != "") {
+                    speakUp("Ok Sir!")
+                    return
+                }
+                startRecognizerWithPermission()
+            }
+        }
+    }
+
+    private fun startRecognizer() {
+        if (SpeechRecognizer.isRecognitionAvailable(this)) {
+            showToastShort("Device does not support speech recognition!")
+        } else {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something!")
+            recognizerIntentLauncher.launch(intent)
+        }
+    }
+
+    override fun onPause() {
+        if (tts != null) {
+            tts?.stop()
+            tts?.shutdown()
+        }
+        super.onPause()
+    }
 }

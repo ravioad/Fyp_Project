@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()
-                error.message.showToastShort(requireContext())
+                showToastShort(error.message)
             }
 
         })
